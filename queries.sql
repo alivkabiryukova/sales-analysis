@@ -107,3 +107,4 @@ select
 	seller
 from tab1
 where row_number = 1 and price = 0
+order by customer_id
