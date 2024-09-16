@@ -81,7 +81,7 @@ order by age_category
 -- количество уникальных покупателей и выручка по месяцам
 select
 	to_char(s.sale_date, 'YYYY-MM') as selling_month,
-	count(s.customer_id) as total_customers,
+	count (distinct s.customer_id) as total_customers,
 	sum(p.price * s.quantity) as income
 from sales s
 join products p on p.product_id = s.product_id
