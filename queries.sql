@@ -67,12 +67,12 @@ order by day_number, seller
 -- количество покупателей по возрастным группам
 select '16-21' as age_category, count(age) as age_count
 from customers
-where age between 16 and 25
+where age >= 16 and age <= 25
 
 union
 
 select
-    ('26-40') as age_category,
+    '26-40' as age_category,
     count(age) as age_count
 from customers
 where age between 26 and 40
