@@ -48,9 +48,8 @@ with tab1 as (
 
 select
 	seller,
-	day_number,
 	day_of_week,
-	floor(sum(revenue))
+	floor(sum(revenue)) as income
 from tab1
 group by seller, day_of_week, day_number
 order by day_number, seller
@@ -76,14 +75,14 @@ select
 	'40+' as age_category,
 	count(age) as age_count
 from customers
-where age >= 40
+where age > 40
 order by age_category
 
 -- количество уникальных покупателей и выручка по месяцам
 select
 	to_char(s.sale_date, 'YYYY-MM') as selling_month,
 	count (distinct s.customer_id) as total_customers,
-	sum(p.price * s.quantity) as income
+	floor(sum(p.price * s.quantity)) as income
 from sales s
 join products p on p.product_id = s.product_id
 group by to_char(s.sale_date, 'YYYY-MM')
