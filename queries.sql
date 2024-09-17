@@ -3,19 +3,14 @@ select count(*) as customers_count
 from customers
 
 -- топ 10 продавцов с наибольшей выручкой
-select distinct
+select
     e.first_name || ' ' || e.last_name as seller,
-    count(s.sales_person_id)
-        over (partition by s.sales_person_id)
-    as operations,
-    floor(
-        sum(p.price * s.quantity)
-            over (partition by s.sales_person_id)
-    )
-    as income
+    count(s.sales_person_id) as operations,
+    floor(sum(p.price * s.quantity)) as income
 from employees as e
 inner join sales as s on e.employee_id = s.sales_person_id
 inner join products as p on s.product_id = p.product_id
+group by e.first_name || ' ' || e.last_name
 order by income desc
 limit 10
 
