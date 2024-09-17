@@ -3,8 +3,8 @@ select count(*) as customers_count
 from customers
 
 -- топ 10 продавцов с наибольшей выручкой
-select distinct
-    e.first_name || ' ' || e.last_name as seller,
+select
+    distinct e.first_name || ' ' || e.last_name as seller,
     count(s.sales_person_id)
         over (partition by s.sales_person_id)
     as operations,
