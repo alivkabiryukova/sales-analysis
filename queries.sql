@@ -66,7 +66,7 @@ order by day_number, seller
 
 -- количество покупателей по возрастным группам
 select
-    ('16-25') as age_category,
+    '16-21' as age_category
     count(age) as age_count
 from customers
 where age between 16 and 25
