@@ -3,8 +3,8 @@ select count(*) as customers_count
 from customers
 
 -- топ 10 продавцов с наибольшей выручкой
-select
-    distinct e.first_name || ' ' || e.last_name as seller,
+select distinct
+    e.first_name || ' ' || e.last_name as seller,
     count(s.sales_person_id)
         over (partition by s.sales_person_id)
     as operations,
@@ -65,9 +65,7 @@ group by seller, day_of_week, day_number
 order by day_number, seller
 
 -- количество покупателей по возрастным группам
-select
-    '16-21' as age_category
-    count(age) as age_count
+select '16-21' as age_category, count(age) as age_count
 from customers
 where age between 16 and 25
 
