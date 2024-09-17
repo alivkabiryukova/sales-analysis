@@ -1,18 +1,23 @@
 -- общее количество продавцов
 select count(*) as customers_count
-from customers
+from customers;
 
 -- топ 10 продавцов с наибольшей выручкой
-select
+select distinct
     e.first_name || ' ' || e.last_name as seller,
-    count(s.sales_person_id) as operations,
-    floor(sum(p.price * s.quantity)) as income
+    count(s.sales_person_id)
+        over (partition by s.sales_person_id)
+    as operations,
+    floor(
+        sum(p.price * s.quantity)
+            over (partition by s.sales_person_id)
+    )
+    as income
 from employees as e
 inner join sales as s on e.employee_id = s.sales_person_id
 inner join products as p on s.product_id = p.product_id
-group by e.first_name || ' ' || e.last_name
 order by income desc
-limit 10
+limit 10;
 
 -- продавцы с выручкой ниже средней выручки всех продавцов
 with tab1 as (
@@ -57,10 +62,13 @@ select
     floor(sum(revenue)) as income
 from tab1
 group by seller, day_of_week, day_number
-order by day_number, seller
+order by day_number, seller;
 
 -- количество покупателей по возрастным группам
-select '16-21' as age_category, count(age) as age_count
+
+select
+    '16-21' as age_category,
+    count(age) as age_count
 from customers
 where age >= 16 and age <= 25
 
@@ -79,7 +87,7 @@ select
     count(age) as age_count
 from customers
 where age > 40
-order by age_category
+order by age_category;
 
 -- количество уникальных покупателей и выручка по месяцам
 select
@@ -88,7 +96,7 @@ select
     floor(sum(p.price * s.quantity)) as income
 from sales as s
 inner join products as p on s.product_id = p.product_id
-group by to_char(s.sale_date, 'YYYY-MM')
+group by to_char(s.sale_date, 'YYYY-MM');
 
 -- покупатели, чья первая покупка была по акции
 with tab1 as (
@@ -114,4 +122,4 @@ select
     seller
 from tab1
 where row_number = 1 and price = 0
-order by customer_id
+order by customer_id;
