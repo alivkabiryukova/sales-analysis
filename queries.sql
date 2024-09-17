@@ -21,8 +21,8 @@ limit 10;
 
 -- продавцы с выручкой ниже средней выручки всех продавцов
 with tab1 as (
-    select
-        distinct e.first_name || ' ' || e.last_name as seller,
+    select distinct
+        e.first_name || ' ' || e.last_name as seller,
         floor(
             avg(
                 p.price * s.quantity) over
