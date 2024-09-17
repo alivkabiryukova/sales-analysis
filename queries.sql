@@ -13,7 +13,7 @@ join products p on p.product_id = s.product_id
 order by income desc
 limit 10
 
--- продавцы, чья выручка ниже средней выручки всех продавцов
+-- продавцы с выручкой ниже средней выручки всех продавцов
 with tab1 as (
 	select distinct
 		e.first_name || ' ' || e.last_name as seller,
