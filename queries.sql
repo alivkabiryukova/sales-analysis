@@ -48,6 +48,7 @@ with tab1 as (
 
 select
 	seller,
+	day_number,
 	day_of_week,
 	floor(sum(revenue))
 from tab1
