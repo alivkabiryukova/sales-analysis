@@ -64,8 +64,8 @@ group by to_char(s.sale_date, 'YYYY-MM');
 
 -- покупатели, чья первая покупка была по акции
 select distinct on (c.customer_id)
-    concat(c.first_name, ' ', c.last_name) as customer,
     s.sale_date,
+    concat(c.first_name, ' ', c.last_name) as customer,
     concat(e.first_name, ' ', e.last_name) as seller
 from sales as s
 inner join products as p on s.product_id = p.product_id
